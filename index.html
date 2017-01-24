@@ -11,7 +11,50 @@
   <body>
     <div class="jumbotron">
       <h1>Online</h1>
+    </div>
+    <div class="row">
+      <!--Login Landing-->
+      <div class="col-lg-6 loginpane">
+        <form id="login">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="text" id="password" class="form-control">
+          </div>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+      <!--New Account Creation-->
+      <div class="col-lg-6 creationpane">
+        <form id="initial">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="text" id="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="initial-amount">Initial Deposit:</label>
+            <input type="number" id="initial-amount" class="form-control">
+          </div>
+          <button type="submit">Open an account</button>
+        </form>
+      </div>
 
+      <div class="col-lg-6 balancepane">
+        <h3>$<span class="total"></span></h3>
+        <div class="form-group">
+          <label for="changebalance">Amount:</label>
+          <input type="number" id="changebalance" class="form-control">
+          <button type="button" id="add">Deposit</button>
+          <button type="button" id="subtract">Withdraw</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>
