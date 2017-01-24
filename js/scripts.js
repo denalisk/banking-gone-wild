@@ -1,7 +1,10 @@
+var accounts = [];
+
 var Account = function(name, amount, password){
   this.accountName = name;
   this.balance = parseFloat(amount);
   this.password = password;
+  accounts.push(this);
 }
 
 var dummyAccount = new Account("User", 20.00, "password");
@@ -35,19 +38,17 @@ $(function() {
       $(".creationpane").show();
       $(".loginpane").hide();
     }
+    $("#add").click(function(){
+      dummyAccount.deposit($("#changebalance").val());
+      $(".total").text(dummyAccount.balance.toFixed(2))
+    });
+
+    $("#subtract").click(function(){
+      dummyAccount.withdraw($("#changebalance").val());
+      $(".total").text(dummyAccount.balance.toFixed(2))
+    });
+    console.log(accounts);
   })
-
-  $("#add").click(function(){
-    dummyAccount.deposit($("#changebalance").val());
-    console.log(dummyAccount.balance);
-    $(".total").text(dummyAccount.balance.toFixed(2))
-  });
-
-  $("#subtract").click(function(){
-    dummyAccount.withdraw($("#changebalance").val());
-    console.log(dummyAccount.balance);
-    $(".total").text(dummyAccount.balance.toFixed(2))
-  });
 
   $("#initial").submit(function(event){
     event.preventDefault();
@@ -57,12 +58,20 @@ $(function() {
 
     var newAccount = new Account(name, initialDep, password);
 
-    console.log(newAccount.accountName + newAccount.balance);
+    $(".total").text(newAccount.balance.toFixed(2));
+    $(".balancepane").show();
 
-    newAccount.deposit(8);
-    console.log(newAccount.balance);
+    $("#add").click(function(){
+      newAccount.deposit($("#changebalance").val());
+      $(".total").text(newAccount.balance.toFixed(2))
+    });
 
-    newAccount.withdrawal(8);
-    console.log(newAccount.balance);
-  })
+    $("#subtract").click(function(){
+      newAccount.withdraw($("#changebalance").val());
+      $(".total").text(newAccount.balance.toFixed(2))
+    });
+    console.log(accounts);
+  });
+
+
 })
