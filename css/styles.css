@@ -1,3 +1,12 @@
 .creationpane, .balancepane {
   display:none;
 }
+
+body {
+  background-color: #adc5ed;
+}
+
+.catchphrase {
+  float: left;
+  position: absolute;
+}

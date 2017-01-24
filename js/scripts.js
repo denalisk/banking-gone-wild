@@ -7,7 +7,17 @@ var Account = function(name, amount, password){
   accounts.push(this);
 }
 
-var dummyAccount = new Account("User", 20.00, "password");
+var accountDropdowner = function(arrayOfAccounts, parentId) {
+  $(parentId).empty();
+
+  for (var i = 0; i < arrayOfAccounts.length; i++) {
+    var accountOption = document.createElement('option');
+    accountOption.innerHTML = arrayOfAccounts[i].accountName;
+    $(parentId).append(accountOption);
+  }
+}
+
+var dummyAccount = new Account("Dummy Account", 20.00, "password");
 
 var passwordCheck = function(account, password) {
   if (account === dummyAccount.accountName && password === dummyAccount.password) {
@@ -28,8 +38,8 @@ Account.prototype.withdraw = function(amount) {
 $(function() {
   $("#login").submit(function(event){
     event.preventDefault();
-    var name = $("#name").val();
-    var password = $("#password").val();
+    var name = $("#loginname").val();
+    var password = $("#loginpassword").val();
 
     if (passwordCheck(name, password)) {
       $(".total").text(dummyAccount.balance.toFixed(2));
@@ -58,6 +68,8 @@ $(function() {
 
     var newAccount = new Account(name, initialDep, password);
 
+    accountDropdowner(accounts, '#account-dropdown');
+
     $(".total").text(newAccount.balance.toFixed(2));
     $(".balancepane").show();
 
@@ -70,7 +82,20 @@ $(function() {
       newAccount.withdraw($("#changebalance").val());
       $(".total").text(newAccount.balance.toFixed(2))
     });
+
     console.log(accounts);
+    console.log(accounts[1].accountName);
+
+    $("#gotoaccount").click(function(){
+      var selectedAccount = $("#account-dropdown").val();
+
+      for (var i = 0; i < accounts.length; i++){
+        if (accounts[i].accountName === selectedAccount) {
+          $(".total").text(accounts[i].balance.toFixed(2));
+        }
+      }
+
+    })
   });
 
 
