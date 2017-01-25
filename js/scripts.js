@@ -36,6 +36,7 @@ Account.prototype.withdraw = function(amount) {
 }
 
 $(function() {
+  var currentAccount = dummyAccount;
   $("#login").submit(function(event){
     event.preventDefault();
     var name = $("#loginname").val();
@@ -48,43 +49,34 @@ $(function() {
       $(".creationpane").show();
       $(".loginpane").hide();
     }
-    $("#add").click(function(){
-      dummyAccount.deposit($("#changebalance").val());
-      $(".total").text(dummyAccount.balance.toFixed(2))
-    });
 
-    $("#subtract").click(function(){
-      dummyAccount.withdraw($("#changebalance").val());
-      $(".total").text(dummyAccount.balance.toFixed(2))
-    });
-    console.log(accounts);
-  })
+    $("#loginname").val("");
+    $("#loginpassword").val("");
+  });
+
+  $("#add").off().click(function(){
+    currentAccount.deposit($("#changebalance").val());
+    $(".total").text(currentAccount.balance.toFixed(2))
+  });
+
+  $("#subtract").off().click(function(){
+    currentAccount.withdraw($("#changebalance").val());
+    $(".total").text(currentAccount.balance.toFixed(2));
+
+  });
 
   $("#initial").submit(function(event){
     event.preventDefault();
     var name = $("#name").val();
     var initialDep = parseFloat($("#initial-amount").val());
     var password = $("#password").val();
-
     var newAccount = new Account(name, initialDep, password);
-
+    currentAccount = newAccount;
     accountDropdowner(accounts, '#account-dropdown');
 
     $(".total").text(newAccount.balance.toFixed(2));
     $(".balancepane").show();
 
-    $("#add").click(function(){
-      newAccount.deposit($("#changebalance").val());
-      $(".total").text(newAccount.balance.toFixed(2))
-    });
-
-    $("#subtract").click(function(){
-      newAccount.withdraw($("#changebalance").val());
-      $(".total").text(newAccount.balance.toFixed(2))
-    });
-
-    console.log(accounts);
-    console.log(accounts[1].accountName);
 
     $("#gotoaccount").click(function(){
       var selectedAccount = $("#account-dropdown").val();
@@ -92,11 +84,10 @@ $(function() {
       for (var i = 0; i < accounts.length; i++){
         if (accounts[i].accountName === selectedAccount) {
           $(".total").text(accounts[i].balance.toFixed(2));
-        }
-      }
-
-    })
+          currentAccount = accounts[i];
+        };
+      };
+    });
   });
-
 
 })
